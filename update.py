@@ -6,8 +6,8 @@ from os import environ
 from dotenv import load_dotenv
 load_dotenv()
 
-openingMessage = ["New Figma library version has been dropped!", "Ikan hiu makan pepaya, ada rilis baru buat library Figma",
-                  "Ikan hiu suka ngaret, jangan lupa ada update!", "Jalan-jalan ke pasar baru, cek Figma-nya yu"]
+openingMessage = ["New Figma library version has been dropped! 🎊", "Ikan hiu makan pepaya, ada rilis baru buat library Figma! 🚀",
+                  "Ikan hiu suka ngaret, jangan lupa ada update! 🎊", "Jalan-jalan ke pasar baru, cek Figma-nya yu! 🚀"]
 
 
 def get_updates():
@@ -29,11 +29,13 @@ def get_updates():
 
 
 def format_message(todays_versions):
+    date = datetime.datetime.today()
+    message = str(date.month) + "/" + str(date.day) + "\n"
     for version in todays_versions:
         label = version["label"]
         description = version["description"]
-        message = "\n" + "**" + label + "**" + "\n" + "_" + \
-            random.choice(openingMessage) + "_\n" + \
+        message += "\n" + "`" + label + "`" + " · " + "_" + \
+            random.choice(openingMessage) + "_\n\n" + \
             "```\n" + description + "\n```"
 
     return message
