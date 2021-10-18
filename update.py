@@ -20,7 +20,7 @@ def get_updates():
     data = r.json()
     versions = data["versions"]
 
-    def filter_function(x): return maya.parse(x['created_at']).datetime().date(
+    filter_function = lambda x: maya.parse(x['created_at']).datetime().date(
     ) == datetime.date.today() and x['description'] is not None and len(x['description']) > 0
     todays_versions = list(filter(filter_function, versions))
     if len(todays_versions) > 0:
@@ -31,15 +31,15 @@ def get_updates():
 def format_message(todays_versions):
     date = datetime.datetime.today()
     message = str(date.month) + "/" + str(date.day) + "\n"
+
     for version in todays_versions:
         label = version["label"]
         description = version["description"]
         message += "\n" + "`" + label + "`" + " · " + "_" + \
             random.choice(openingMessage) + "_\n\n" + \
-            "```\n" + description + "\n```"
+            "```\n" + description + "\n```\n"
 
     return message
-
 
 def post_message(message):
     SLACK_TEAM_ID = environ.get('SLACK_TEAM_ID')
